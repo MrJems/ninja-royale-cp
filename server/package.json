@@ -1,0 +1,16 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "game engine",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node src/server.js"
+  },
+  "author": "Telar Karan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9"
+  }
+}
