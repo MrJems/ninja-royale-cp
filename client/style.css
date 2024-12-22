@@ -1,0 +1,17 @@
+body {
+  display: flex;
+  justify-content: center;
+
+  margin: 0;
+  padding: 0;
+  background-color: #0b0b0b;
+  overflow: hidden;
+  image-rendering: pixelated;
+}
+
+canvas {
+  margin: 50px;
+  width: 70%;
+  background-color: green;
+  border: #170202 solid;
+}

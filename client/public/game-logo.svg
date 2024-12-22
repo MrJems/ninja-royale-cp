@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- Background -->
+  <rect width="64" height="64" fill="#282C34" />
+
+  <!-- Ninja Head -->
+  <rect x="20" y="10" width="24" height="16" fill="#000" />
+  <rect x="24" y="14" width="16" height="8" fill="#555" />
+  <rect x="26" y="16" width="4" height="4" fill="#FFD700" />
+  <rect x="34" y="16" width="4" height="4" fill="#FFD700" />
+
+  <!-- Ninja Body -->
+  <rect x="22" y="26" width="20" height="18" fill="#000" />
+  <rect x="26" y="30" width="12" height="10" fill="#444" />
+
+  <!-- Ninja Arms -->
+  <rect x="18" y="28" width="4" height="12" fill="#000" />
+  <rect x="42" y="28" width="4" height="12" fill="#000" />
+
+  <!-- Ninja Legs -->
+  <rect x="24" y="44" width="6" height="12" fill="#000" />
+  <rect x="34" y="44" width="6" height="12" fill="#000" />
+
+  <!-- Ninja Sword -->
+  <rect x="46" y="20" width="2" height="20" fill="#A6ACAF" />
+  <rect x="44" y="18" width="6" height="4" fill="#F1C40F" />
+</svg>
