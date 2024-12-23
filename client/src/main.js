@@ -19,11 +19,11 @@ const frameSequences = {
   [RIGHT]: [3, 7, 11, 15, 19, 23, 3],
 };
 
-console.log(collisions.length);
+// console.log(collisions.length);
 
 let currentDirection = null;
 const moveSpeed = 2;
-const backgroundOffset = new Vector(0, 0);
+const backgroundOffset = new Vector(-100, -100);
 const mapWidth = 16 * 63;
 const mapHeight = 16 * 63;
 const input = new Input();
@@ -31,6 +31,10 @@ const input = new Input();
 const heroPos = new Vector(canvas.width / 2, canvas.height / 2);
 const worldmap = new Sprite({
   resource: assets.images.worldmap,
+  frameSize: new Vector(63 * 16, 63 * 16),
+});
+const treemap = new Sprite({
+  resource: assets.images.treeoverlay,
   frameSize: new Vector(63 * 16, 63 * 16),
 });
 const hero = new Sprite({
@@ -74,14 +78,62 @@ collisions.forEach((row, i) => {
     }
   });
 });
-console.log("boudnry :", boundaries);
+// console.log("boudnry :", boundaries);
 
 function rectangularCollision(index) {
+  let NextX = heroPos.x;
+  let NextY = heroPos.y;
+  let WorldX = backgroundOffset.x;
+  let WorldY = backgroundOffset.y;
+  const detectBefore = 2;
+  if (input.direction === DOWN) {
+    if (heroPos.y < canvas.height / 2 - 16) {
+      NextY = heroPos.y + detectBefore;
+    } else if (backgroundOffset.y > -(mapHeight - canvas.height)) {
+      WorldY = backgroundOffset.y - detectBefore;
+    }
+  }
+
+  if (input.direction === UP) {
+    if (backgroundOffset.y < 0) {
+      WorldY = backgroundOffset.y + detectBefore;
+    } else if (heroPos.y > 0) {
+      NextY = heroPos.y - detectBefore;
+    }
+  }
+
+  if (input.direction === LEFT) {
+    if (backgroundOffset.x < 0) {
+      WorldX = backgroundOffset.x + detectBefore;
+    } else if (heroPos.x > 0) {
+      NextX = heroPos.x - detectBefore;
+    }
+  }
+  if (input.direction === RIGHT) {
+    if (heroPos.x < canvas.width / 2) {
+      NextX = heroPos.x + detectBefore;
+    } else if (backgroundOffset.x > -(mapWidth - canvas.width)) {
+      WorldX = backgroundOffset.x - detectBefore;
+    }
+    currentDirection = RIGHT;
+    animateHero(frameSequences[RIGHT]);
+  }
   // index = 1;
-  console.log(heroPos, boundaries[0], index, heroPos.x, backgroundOffset.y);
+  // console.log(heroPos, boundaries[0], index, heroPos.x, backgroundOffset.y);
 
   let w = 8;
   // return true;
+
+  return (
+    NextX + w + Math.abs(WorldX) >= boundaries[index].position.x + 3 &&
+    NextX + Math.abs(WorldX) - w <= boundaries[index].position.x + 13 &&
+    NextY - w + Math.abs(WorldY) <= boundaries[index].position.y + 13 &&
+    NextY + w + Math.abs(WorldY) >= boundaries[index].position.y + 3
+    // heroPos.x <= boundaries[2].position.x + 16 &&
+    // heroPos.y <= boundaries[2].position.y + 16 &&
+    // heroPos.y + 16 >= boundaries[2].position.y
+  );
+
   return (
     heroPos.x + w + Math.abs(backgroundOffset.x) >=
       boundaries[index].position.x &&
@@ -97,9 +149,10 @@ function rectangularCollision(index) {
 }
 
 function moveable() {
+  let nextMove = input.direction;
   for (let i = 0; i < boundaries.length; i++) {
-    console.log(i);
-    if (rectangularCollision(i)) {
+    // console.log(i);
+    if (rectangularCollision(i, nextMove)) {
       return false;
     }
   }
@@ -231,9 +284,10 @@ const draw = () => {
   const heroPosX = heroPos.x + heroOffset.x;
   const heroPosY = heroPos.y + heroOffset.y;
   hero.drawImage(ctx, heroPosX, heroPosY);
-  boundaries.forEach((bound) => {
-    bound.draw(backgroundOffset);
-  });
+  treemap.drawImage(ctx, backgroundOffset.x, backgroundOffset.y);
+  // boundaries.forEach((bound) => {
+  //   bound.draw(backgroundOffset);
+  // });
 };
 
 const gameLoop = new GameLoop(update, draw);
