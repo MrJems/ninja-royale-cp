@@ -4,38 +4,45 @@ import { Vector } from "./commons/Vector";
 import { GameLoop } from "./GameLoop";
 import { Input } from "./Input";
 import collisions from "./commons/collison";
-import { DOWN, LEFT, RIGHT, UP } from "./Input";
+import {
+  DOWN,
+  LEFT,
+  RIGHT,
+  UP,
+  DEFAULT_ANIMATION_COUNTER,
+  DEFAULT_ANIMATION_FRAME,
+  ANIMATION_SPEED,
+  FRAME_SEQUENCES,
+  DEFAULT_DIRECTION,
+  MOVE_SPEED,
+  MAP_WIDTH,
+  MAP_HEIGHT,
+} from "./commons/constants";
 // import attemptMove from "./services/attemptMove";
+
 const canvas = document.querySelector("#game-canvas");
 const ctx = canvas.getContext("2d");
 
-let animationFrame = 0;
-let animationCounter = 0;
-const animationSpeed = 4;
-const frameSequences = {
-  [DOWN]: [0, 4, 8, 12, 16, 20, 0],
-  [UP]: [1, 5, 9, 13, 17, 21, 1],
-  [LEFT]: [2, 6, 10, 14, 18, 22, 2],
-  [RIGHT]: [3, 7, 11, 15, 19, 23, 3],
-};
+let animationFrame = DEFAULT_ANIMATION_FRAME;
+let animationCounter = DEFAULT_ANIMATION_COUNTER;
+const animationSpeed = ANIMATION_SPEED;
+const frameSequences = FRAME_SEQUENCES;
+let currentDirection = DEFAULT_DIRECTION;
+const moveSpeed = MOVE_SPEED;
 
-// console.log(collisions.length);
-
-let currentDirection = null;
-const moveSpeed = 2;
 const backgroundOffset = new Vector(-100, -100);
-const mapWidth = 16 * 63;
-const mapHeight = 16 * 63;
-const input = new Input();
+const mapWidth = MAP_WIDTH;
+const mapHeight = MAP_HEIGHT;
 
+const input = new Input();
 const heroPos = new Vector(canvas.width / 2, canvas.height / 2);
 const worldmap = new Sprite({
   resource: assets.images.worldmap,
-  frameSize: new Vector(63 * 16, 63 * 16),
+  frameSize: new Vector(mapWidth, mapHeight),
 });
 const treemap = new Sprite({
   resource: assets.images.treeoverlay,
-  frameSize: new Vector(63 * 16, 63 * 16),
+  frameSize: new Vector(mapWidth, mapHeight),
 });
 const hero = new Sprite({
   resource: assets.images.player1,
@@ -78,7 +85,6 @@ collisions.forEach((row, i) => {
     }
   });
 });
-// console.log("boudnry :", boundaries);
 
 function rectangularCollision(index) {
   let NextX = heroPos.x;
@@ -115,8 +121,6 @@ function rectangularCollision(index) {
     } else if (backgroundOffset.x > -(mapWidth - canvas.width)) {
       WorldX = backgroundOffset.x - detectBefore;
     }
-    currentDirection = RIGHT;
-    animateHero(frameSequences[RIGHT]);
   }
   // index = 1;
   // console.log(heroPos, boundaries[0], index, heroPos.x, backgroundOffset.y);
@@ -133,25 +137,11 @@ function rectangularCollision(index) {
     // heroPos.y <= boundaries[2].position.y + 16 &&
     // heroPos.y + 16 >= boundaries[2].position.y
   );
-
-  return (
-    heroPos.x + w + Math.abs(backgroundOffset.x) >=
-      boundaries[index].position.x &&
-    heroPos.x + Math.abs(backgroundOffset.x) - w <=
-      boundaries[index].position.x + 16 &&
-    heroPos.y - w + Math.abs(backgroundOffset.y) <=
-      boundaries[index].position.y + 16 &&
-    heroPos.y + w + Math.abs(backgroundOffset.y) >= boundaries[index].position.y
-    // heroPos.x <= boundaries[2].position.x + 16 &&
-    // heroPos.y <= boundaries[2].position.y + 16 &&
-    // heroPos.y + 16 >= boundaries[2].position.y
-  );
 }
 
 function moveable() {
   let nextMove = input.direction;
   for (let i = 0; i < boundaries.length; i++) {
-    // console.log(i);
     if (rectangularCollision(i, nextMove)) {
       return false;
     }
@@ -159,50 +149,7 @@ function moveable() {
   return true;
 }
 
-// if (rectangularCollision()) {
-//   // console.log(boundaries[2]);
-//   console.log("colideed");
-// }
 const update = () => {
-  // const attemptMoveParams = {
-  //   direction: input.direction,
-  //   heroPos,
-  //   backgroundOffset,
-  //   collisions,
-  //   TILE_SIZE: 16,
-  //   mapWidth,
-  //   mapHeight,
-  //   moveSpeed,
-  //   canvas,
-  // };
-  // if (input.direction === DOWN) {
-  //   if (attemptMove(attemptMoveParams)) {
-  //     currentDirection = DOWN;
-  //     animateHero(frameSequences[DOWN]);
-  //   }
-  // }
-
-  // if (input.direction === UP) {
-  //   if (attemptMove(attemptMoveParams)) {
-  //     currentDirection = UP;
-  //     animateHero(frameSequences[UP]);
-  //   }
-  // }
-
-  // if (input.direction === LEFT) {
-  //   if (attemptMove(attemptMoveParams)) {
-  //     currentDirection = LEFT;
-  //     animateHero(frameSequences[LEFT]);
-  //   }
-  // }
-
-  // if (input.direction === RIGHT) {
-  //   if (attemptMove(attemptMoveParams)) {
-  //     currentDirection = RIGHT;
-  //     animateHero(frameSequences[RIGHT]);
-  //   }
-  // }
-
   if (heroPos.x + 16)
     if (input.direction === DOWN) {
       // console.log(backgroundOffset, mapHeight, canvas, heroPos);
@@ -217,23 +164,6 @@ const update = () => {
         }
       }
 
-      // if (
-      //   backgroundOffset.y > -(mapHeight - canvas.height) ||
-      //   backgroundOffset.y < -(canvas.height / 2)
-      // ) {
-      //   backgroundOffset.y -= moveSpeed;
-      // } else if (heroPos.y < canvas.height - 16) {
-      //   heroPos.y += moveSpeed;
-      // }
-
-      // if (
-      //   backgroundOffset.y > -(mapHeight - canvas.height) ||
-      //   backgroundOffset.y < -(canvas.height / 2)
-      // ) {
-      //   backgroundOffset.y -= moveSpeed;
-      // } else if (heroPos.y < canvas.height - 16) {
-      //   heroPos.y += moveSpeed;
-      // }
       currentDirection = DOWN;
       animateHero(frameSequences[DOWN]);
     }
@@ -285,9 +215,6 @@ const draw = () => {
   const heroPosY = heroPos.y + heroOffset.y;
   hero.drawImage(ctx, heroPosX, heroPosY);
   treemap.drawImage(ctx, backgroundOffset.x, backgroundOffset.y);
-  // boundaries.forEach((bound) => {
-  //   bound.draw(backgroundOffset);
-  // });
 };
 
 const gameLoop = new GameLoop(update, draw);

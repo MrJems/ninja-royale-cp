@@ -1,8 +1,4 @@
-export const LEFT = "LEFT";
-export const RIGHT = "RIGHT";
-export const UP = "UP";
-export const DOWN = "DOWN";
-
+import { UP, DOWN, LEFT, RIGHT } from "./commons/constants";
 export class Input {
   constructor() {
     this.heldDirections = [];
