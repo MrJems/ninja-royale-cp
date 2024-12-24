@@ -13,7 +13,7 @@
 **Clone this repository** (or download the ZIP):
 
 ```bash
-git clone https://github.com/YourUsername/ninja-royale.git
+git clone https://github.com/telarkaran/ninja-royale.git
 cd ninja-royale
 ```
 
@@ -36,19 +36,6 @@ cd ninja-royale
   cd ../server
   npm install
   ```
-
-**Create a `.env` file** (optional):
-
-- If your server requires environment variables (e.g., DB connection strings, API keys), create a `.env` file in `server/` with contents like:
-
-  ```bash
-  PORT=3000
-  DB_URI=mongodb://localhost:27017/ninja-royale
-  ```
-
-- For the client, you can store environment variables in `.env` (or `.env.local`) as well, using Vite’s prefix rules (e.g., `VITE_API_URL=http://localhost:3000`).
-
----
 
 ## Development
 
