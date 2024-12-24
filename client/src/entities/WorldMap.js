@@ -29,7 +29,6 @@ export class WorldMap {
       frameSize: new Vector(this.mapWidth, this.mapHeight),
     });
 
-    // Build boundaries from collisions data
     this.boundaries = [];
     collisions.forEach((row, i) => {
       row.forEach((symbol, j) => {
@@ -45,19 +44,14 @@ export class WorldMap {
   }
 
   draw(ctx) {
-    // Draw main background
     this.backgroundSprite.drawImage(ctx, this.offset.x, this.offset.y);
   }
 
   drawOverlay(ctx) {
-    // Draw tree overlay
     this.treeSprite.drawImage(ctx, this.offset.x, this.offset.y);
   }
 
   moveOffset(direction, speed, canvas, heroPos) {
-    // Move the world offset if the hero is near screen center
-    // Return `true` if we actually moved the offset, `false` if not
-
     if (direction === "DOWN") {
       if (this.offset.y > -(this.mapHeight - canvas.height)) {
         if (heroPos.y < 90) {

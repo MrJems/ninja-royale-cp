@@ -76,7 +76,14 @@ const update = () => {
         myNinja.position
       );
 
-      myNinja.update(direction, true, movedWorldOffset);
+      if (canMove) {
+        if (!movedWorldOffset) {
+          myNinja.update(direction, true, movedWorldOffset);
+        } else {
+          myNinja.update(direction, canMove, movedWorldOffset);
+        }
+      }
+      // myNinja.update(direction, true, movedWorldOffset);
 
       actualDirectionToSend = direction;
     }

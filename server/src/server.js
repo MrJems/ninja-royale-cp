@@ -26,21 +26,21 @@ io.on("connection", (socket) => {
     allPlayers.push(data);
     socket.emit("currentPlayers", allPlayers);
 
-    console.log(allPlayers);
+    // console.log(allPlayers);
   });
 
   socket.on("playerMove", (data) => {
-    console.log("...............");
-    console.log(allPlayers);
+    // console.log("...............");
+    // console.log(allPlayers);
     allPlayers = allPlayers.map((obj) => {
       if (obj.id === data.id) {
-        console.log("...........=====...");
+        // console.log("...........=====...");
         return { ...obj, player: data.player, world: data.world };
       }
       return obj;
     });
     // players.push(data);
-    console.log(allPlayers);
+    // console.log(allPlayers);
     io.emit("currentPlayers", allPlayers);
 
     // console.log(allPlayers);
