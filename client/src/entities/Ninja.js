@@ -1,7 +1,6 @@
 import { Sprite } from "../commons/sprite.js";
 import { Vector } from "../commons/Vector.js";
 import { DOWN, UP, LEFT, RIGHT } from "../commons/constants.js";
-import { WorldMap } from "./WorldMap.js";
 
 export class Ninja {
   constructor({
@@ -20,7 +19,7 @@ export class Ninja {
       vFrames,
       frame: 0,
     });
-    this.position = position; // in canvas space
+    this.position = position;
     this.moveSpeed = moveSpeed;
 
     // Animation state
@@ -28,17 +27,12 @@ export class Ninja {
     this.currentDirection = DOWN;
     this.animationFrame = 0;
     this.animationCounter = 0;
-    this.animationSpeed = 4; // how fast to animate
-
-    // this.heroOffset = new Vector(-8, -8);
+    this.animationSpeed = 4;
   }
 
   update(direction, canMove, walk) {
     if (!direction) return;
-    // console.log(worldOffset);
-    // worldOffset.y > -(this.mapHeight - canvas.height)
 
-    // Movement
     if (direction === DOWN && canMove) {
       if (this.position.y > 172) {
         return;
@@ -68,7 +62,6 @@ export class Ninja {
       this.currentDirection = RIGHT;
     }
 
-    // Animate
     this.animateHero(this.frameSequences[this.currentDirection]);
   }
 
@@ -82,7 +75,6 @@ export class Ninja {
   }
 
   draw(ctx) {
-    // If your sprite needs an offset to center it, handle it here
     const heroOffset = new Vector(-8, -8);
     const drawX = this.position.x + heroOffset.x;
     const drawY = this.position.y + heroOffset.y;

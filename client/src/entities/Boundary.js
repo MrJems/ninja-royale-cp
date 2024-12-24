@@ -1,5 +1,5 @@
 export class Boundary {
-  constructor({ position, width = 16, height = 16 }) {
+  constructor({ position, width = 15, height = 15 }) {
     this.position = position;
     this.width = width;
     this.height = height;
@@ -16,22 +16,3 @@ export class Boundary {
     );
   }
 }
-
-// const boundaries = [];
-
-// collisions.forEach((row, i) => {
-//   row.forEach((symbol, j) => {
-//     if (symbol !== 0) {
-//       boundaries.push(
-//         new Boundary({
-//           position: {
-//             x: j * 16,
-//             y: i * 16,
-//           },
-//         })
-//       );
-//     }
-//   });
-// });
-
-// export default boundaries;
