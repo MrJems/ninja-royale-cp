@@ -23,3 +23,5 @@ export const TILE_SIZE = 16;
 export const MAP_TILES = 63;
 export const MAP_WIDTH = TILE_SIZE * MAP_TILES; // = 16 * 63
 export const MAP_HEIGHT = TILE_SIZE * MAP_TILES;
+
+export const serverUrl = "http://localhost:3000/";

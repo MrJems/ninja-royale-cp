@@ -35,10 +35,8 @@ io.on("connection", (socket) => {
     allPlayers = allPlayers.map((obj) => {
       if (obj.id === data.id) {
         console.log("...........=====...");
-        // Return the updated object
         return { ...obj, player: data.player, world: data.world };
       }
-      // Return the object as is if it doesn't match the id
       return obj;
     });
     // players.push(data);
