@@ -5,6 +5,8 @@ class Assets {
       player1: "/player.png",
       shadow: "/shadow.png",
       treeoverlay: "/world/treemap.png",
+      sword: "/swordsprite.png",
+      life: "/heart.png",
     };
 
     this.images = {};

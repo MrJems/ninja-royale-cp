@@ -1,4 +1,4 @@
-import { Sprite } from "../commons/sprite.js";
+import { Sprite } from "../commons/Sprite.js";
 import { Vector } from "../commons/Vector.js";
 import { Boundary } from "../entities/Boundary.js";
 import collisions from "../commons/collison.js";
@@ -49,6 +49,19 @@ export class WorldMap {
 
   drawOverlay(ctx) {
     this.treeSprite.drawImage(ctx, this.offset.x, this.offset.y);
+  }
+
+  resetOffset() {
+    const possibleOffsets = [
+      new Vector(-600, 0),
+      new Vector(-295, -610),
+      new Vector(-440, -245),
+      new Vector(-345, -175),
+      new Vector(-600, -825),
+    ];
+    const randomIndex = Math.floor(Math.random() * possibleOffsets.length);
+    const randomOffset = possibleOffsets[randomIndex];
+    this.offset = randomOffset;
   }
 
   moveOffset(direction, speed, canvas, heroPos) {

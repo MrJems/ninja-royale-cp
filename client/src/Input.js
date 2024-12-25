@@ -1,8 +1,8 @@
-import { UP, DOWN, LEFT, RIGHT } from "./commons/constants";
+import { UP, DOWN, LEFT, RIGHT, SPACE } from "./commons/constants";
 export class Input {
   constructor() {
     this.heldDirections = [];
-
+    this.isSpacePressed = false;
     document.addEventListener("keydown", (e) => {
       if (e.code === "ArrowUp" || e.code === "KeyW") {
         this.onArrowPressed(UP);
@@ -15,6 +15,9 @@ export class Input {
       }
       if (e.code === "ArrowRight" || e.code === "KeyD") {
         this.onArrowPressed(RIGHT);
+      }
+      if (e.key == " " || e.code == "Space") {
+        this.isSpacePressed = true;
       }
     });
 
@@ -31,11 +34,18 @@ export class Input {
       if (e.code === "ArrowRight" || e.code === "KeyD") {
         this.onArrowReleased(RIGHT);
       }
+      if (e.key == " " || e.code == "Space") {
+        this.isSpacePressed = false;
+      }
     });
   }
 
   get direction() {
     return this.heldDirections[0];
+  }
+
+  get isAttacking() {
+    return this.isSpacePressed;
   }
 
   onArrowPressed(direction) {

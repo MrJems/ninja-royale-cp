@@ -1,4 +1,4 @@
-import { Sprite } from "../commons/sprite.js";
+import { Sprite } from "../commons/Sprite.js";
 import { Vector } from "../commons/Vector.js";
 import { DOWN, UP, LEFT, RIGHT } from "../commons/constants.js";
 
@@ -30,7 +30,10 @@ export class Ninja {
     this.animationSpeed = 4;
   }
 
-  update(direction, canMove, walk) {
+  update(direction, canMove, walk, isAttacking) {
+    // if (isAttacking) {
+    //   this.sprite.frame = 5;
+    // }
     if (!direction) return;
 
     if (direction === DOWN && canMove) {
@@ -61,8 +64,11 @@ export class Ninja {
       if (!walk) this.position.x += this.moveSpeed;
       this.currentDirection = RIGHT;
     }
-
+    // if (isAttacking) {
+    //   this.sprite.frame = 5;
+    // } else {
     this.animateHero(this.frameSequences[this.currentDirection]);
+    // }
   }
 
   animateHero(sequence) {

@@ -19,6 +19,9 @@ export function emitPlayerCreated(socket, data) {
 export function emitPlayerMove(socket, data) {
   socket.emit("playerMove", data);
 }
+export function emitPlayerAttacked(socket, data) {
+  socket.emit("playerAttacked", data);
+}
 
 export function handleConnect(
   socketId,
@@ -38,6 +41,6 @@ export function handleConnect(
 }
 
 export function handleCurrentPlayers(players, setAllPlayers) {
-  console.log("All players:", players);
+  // console.log("All players:", players);
   setAllPlayers(players);
 }

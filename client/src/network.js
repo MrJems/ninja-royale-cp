@@ -3,6 +3,7 @@ import {
   initNetwork,
   emitPlayerCreated,
   emitPlayerMove,
+  emitPlayerAttacked,
 } from "./services/networkServices";
 
 export class Network {
@@ -20,5 +21,9 @@ export class Network {
 
   playerMove(data) {
     emitPlayerMove(this.socket, data);
+  }
+
+  playerAttacked(data) {
+    emitPlayerAttacked(this.socket, data);
   }
 }

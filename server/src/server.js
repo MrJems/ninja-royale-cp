@@ -35,7 +35,13 @@ io.on("connection", (socket) => {
     allPlayers = allPlayers.map((obj) => {
       if (obj.id === data.id) {
         // console.log("...........=====...");
-        return { ...obj, player: data.player, world: data.world };
+        return {
+          ...obj,
+          player: data.player,
+          world: data.world,
+          isAttacking: data.isAttacking,
+          sword: data.sword,
+        };
       }
       return obj;
     });
@@ -45,6 +51,8 @@ io.on("connection", (socket) => {
 
     // console.log(allPlayers);
   });
+
+  // socket.on("playerAttacked", (data) => {});
   // console.log(allPlayers);
 
   socket.on("disconnect", () => {
