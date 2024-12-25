@@ -15,3 +15,22 @@ canvas {
   background-color: green;
   border: #170202 solid;
 }
+
+#game-over-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%; /* Matches canvas width */
+  height: 100%; /* Matches canvas height */
+  transform: translate(-50%, -50%);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8); /* Optional: Semi-transparent background */
+  z-index: 10; /* Ensures it appears above the canvas */
+}
+
+#game-over-overlay img {
+  max-width: 100%;
+  max-height: 100%;
+}

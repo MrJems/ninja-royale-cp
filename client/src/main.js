@@ -16,6 +16,7 @@ import {
 } from "./services/networkServices";
 import { Sword } from "./entities/Sword";
 import { Heart } from "./entities/Heart";
+import { DeadChar } from "./entities/DeadCharacter";
 const canvas = document.querySelector("#game-canvas");
 const ctx = canvas.getContext("2d");
 
@@ -52,6 +53,14 @@ const myHearts = new Heart({
   vFrames: 1,
 });
 
+const deadChar = new DeadChar({
+  Resource: assets.images.characters,
+  frameSize: new Vector(16, 16),
+  hFrames: 7,
+  vFrames: 2,
+  position: myNinja.position,
+});
+
 // const playersData = {};
 let allPlayers = [];
 let mySocketId = null;
@@ -81,6 +90,11 @@ network.init(
 );
 
 const update = () => {
+  if (myHearts.currentHealth <= 0) {
+    setTimeout(() => {
+      location.reload();
+    }, 3000);
+  }
   const direction = input.direction;
   let actualDirectionToSend = null;
   // if (input.isAttacking) {
@@ -142,6 +156,7 @@ const update = () => {
         y: mySword.position.y,
         direction: mySword.currentDirection,
       },
+      health: myHearts.currentHealth,
     });
   }
 };
@@ -150,10 +165,15 @@ const draw = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   worldMap.draw(ctx);
+  // if (myHearts.currentHealth <= 0) {
+  //   deadChar.draw(ctx);
+  // } else {
   myNinja.draw(ctx);
+  // }
   // let rect1;
   // let rect2;
   // let flag = false;
+
   for (let i = 0; i < allPlayers.length; i++) {
     const remotePlayer = allPlayers[i];
     if (remotePlayer.id !== mySocketId) {
@@ -182,6 +202,18 @@ const draw = () => {
       }
 
       remotePlayer.ninjaInstance.draw(ctx);
+      // // if(remotePlayer.health <= 0){
+      // remotePlayer.heartInstance = new DeadChar({
+      //   spriteResource: assets.images.characters,
+      //   frameSize: new Vector(16, 16),
+      //   hFrames: 7,
+      //   vFrames: 2,
+
+      //   position: remotePlayer.ninjaInstance.position,
+      // });
+      // // }
+      // remotePlayer.heartInstance.draw(ctx);
+
       if (remotePlayer.isAttacking) {
         remotePlayer.swordInstance = new Sword({
           swordResource: assets.images.sword,
@@ -290,6 +322,11 @@ const draw = () => {
   // }
   worldMap.drawOverlay(ctx);
   myHearts.draw(ctx);
+
+  if (myHearts.currentHealth <= 0) {
+    // gameOver.draw(ctx);
+    document.getElementById("game-over-overlay").style.display = "flex";
+  }
 };
 
 function checkBoundaries(direction) {

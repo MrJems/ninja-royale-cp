@@ -41,6 +41,7 @@ io.on("connection", (socket) => {
           world: data.world,
           isAttacking: data.isAttacking,
           sword: data.sword,
+          health: data.health,
         };
       }
       return obj;

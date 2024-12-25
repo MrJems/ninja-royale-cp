@@ -2,11 +2,14 @@ class Assets {
   constructor() {
     this.toLoad = {
       worldmap: "/world/worldmap.png",
+      
       player1: "/player.png",
       shadow: "/shadow.png",
       treeoverlay: "/world/treemap.png",
       sword: "/swordsprite.png",
       life: "/heart.png",
+      gameover: "/gmo2.png",
+      characters: "/characters.png",
     };
 
     this.images = {};
