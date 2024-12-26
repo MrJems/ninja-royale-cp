@@ -22,23 +22,23 @@ export class Heart {
       damagetype === "SWORD" &&
       currentTime - this.lastDamageTime >= this.damageCooldown
     ) {
-      this.currentHealth = Math.max(this.currentHealth - 1, 0);
+      this.currentHealth = Math.max(this.currentHealth - 2, 0);
       this.lastDamageTime = currentTime;
     }
   }
 
   draw(ctx) {
-    const heartWidth = 17; // Spacing between hearts
+    const heartWidth = 17;
     for (let i = 0; i < 3; i++) {
       let frame;
-      const heartHealth = this.currentHealth - i * 2; // Health for this specific heart
+      const heartHealth = this.currentHealth - i * 2;
 
       if (heartHealth >= 2) {
-        frame = 4; // Full heart
+        frame = 4;
       } else if (heartHealth === 1) {
-        frame = 2; // Half heart
+        frame = 2;
       } else {
-        frame = 0; // Empty heart
+        frame = 0;
       }
 
       this.sprite.frame = frame;

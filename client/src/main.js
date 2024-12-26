@@ -77,6 +77,9 @@ const setAllPlayers = (players) => {
     if (existing && existing.ninjaInstance) {
       p.ninjaInstance = existing.ninjaInstance;
     }
+    if (existing && existing.deadInstance) {
+      p.deadInstance = existing.deadInstance;
+    }
   });
   allPlayers = players;
 };
@@ -145,6 +148,7 @@ const update = () => {
         x: myNinja.position.x,
         y: myNinja.position.y,
         direction: actualDirectionToSend,
+        frame: myNinja.sprite.frame,
       },
       world: {
         x: worldMap.offset.x,
@@ -196,12 +200,28 @@ const draw = () => {
       const remoteDirection = remotePlayer.player.direction;
       if (remoteDirection) {
         remotePlayer.ninjaInstance.currentDirection = remoteDirection;
-        remotePlayer.ninjaInstance.animateHero(
-          remotePlayer.ninjaInstance.frameSequences[remoteDirection]
-        );
+        //   remotePlayer.ninjaInstance.animateHero(
+        //     remotePlayer.ninjaInstance.frameSequences[remoteDirection]
+        //   );
       }
+      console.log(remotePlayer);
+      remotePlayer.ninjaInstance.sprite.frame = remotePlayer.player.frame;
 
-      remotePlayer.ninjaInstance.draw(ctx);
+      if (remotePlayer.health <= 0) {
+        // if (remotePlayer.deadInstance) {
+        console.log("-----------inside dead----------------");
+        remotePlayer.deadInstance = new DeadChar({
+          Resource: assets.images.characters,
+          frameSize: new Vector(16, 16),
+          hFrames: 7,
+          vFrames: 2,
+          position: remotePlayer.ninjaInstance.position,
+        });
+        // }
+        remotePlayer.deadInstance.draw(ctx);
+      } else {
+        remotePlayer.ninjaInstance.draw(ctx);
+      }
       // // if(remotePlayer.health <= 0){
       // remotePlayer.heartInstance = new DeadChar({
       //   spriteResource: assets.images.characters,

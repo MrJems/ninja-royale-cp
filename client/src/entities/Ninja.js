@@ -31,6 +31,11 @@ export class Ninja {
   }
 
   update(direction, canMove, walk, isAttacking) {
+    if (isAttacking) {
+      this.moveSpeed = 1;
+    } else {
+      this.moveSpeed = 2;
+    }
     // if (isAttacking) {
     //   this.sprite.frame = 5;
     // }
@@ -40,35 +45,41 @@ export class Ninja {
       if (this.position.y > 172) {
         return;
       }
+
       if (!walk) this.position.y += this.moveSpeed;
       this.currentDirection = DOWN;
+      if (isAttacking) this.sprite.frame = 12;
     }
     if (direction === UP && canMove) {
       if (this.position.y < 8) {
         return;
       }
       if (!walk) this.position.y -= this.moveSpeed;
+
       this.currentDirection = UP;
+      if (isAttacking) this.sprite.frame = 13;
     }
     if (direction === LEFT && canMove) {
       if (this.position.x < 8) {
         return;
       }
       if (!walk) this.position.x -= this.moveSpeed;
+
       this.currentDirection = LEFT;
+      if (isAttacking) this.sprite.frame = 18;
     }
     if (direction === RIGHT && canMove) {
       if (this.position.y > 312) {
         return;
       }
       if (!walk) this.position.x += this.moveSpeed;
+
       this.currentDirection = RIGHT;
+      if (isAttacking) this.sprite.frame = 19;
     }
-    // if (isAttacking) {
-    //   this.sprite.frame = 5;
-    // } else {
-    this.animateHero(this.frameSequences[this.currentDirection]);
-    // }
+    if (!isAttacking) {
+      this.animateHero(this.frameSequences[this.currentDirection]);
+    }
   }
 
   animateHero(sequence) {
