@@ -29,7 +29,7 @@ export class Heart {
 
   draw(ctx) {
     const heartWidth = 17;
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < this.maxHealth / 2; i++) {
       let frame;
       const heartHealth = this.currentHealth - i * 2;
 

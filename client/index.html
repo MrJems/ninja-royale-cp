@@ -8,6 +8,13 @@
     <title>ninja-royale</title>
   </head>
   <body style="position: relative; display: flex; justify-content: center">
+    <div id="start-screen">
+      <div id="start-content">
+        <h1 id="game-title">Ninja Royale</h1>
+        <button id="start-button">Start Game</button>
+      </div>
+    </div>
+
     <canvas id="game-canvas" width="320" height="180"></canvas>
     <div id="game-over-overlay" style="display: none">
       <img src="/gmo2.png" alt="Game Over" />
@@ -15,11 +22,11 @@
 
     <div id="mobile-controls">
       <div id="d-pad">
-        <button id="up">▲</button>
+        <button id="up"></button>
         <div>
-          <button id="left">◀</button>
-          <button id="down">▼</button>
-          <button id="right">▶</button>
+          <button id="left"></button>
+          <button id="down"></button>
+          <button id="right"></button>
         </div>
       </div>
       <button id="attack">Attack</button>

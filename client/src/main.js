@@ -21,7 +21,26 @@ const canvas = document.querySelector("#game-canvas");
 const ctx = canvas.getContext("2d");
 
 const input = new Input();
+
+const gameoverMusic = new Audio("/gameover.wav");
+gameoverMusic.volume = 0.5;
+// const swordSound = new Audio("/sword-sound.mp3");
 document.addEventListener("DOMContentLoaded", () => {
+  const startScreen = document.getElementById("start-screen");
+  const startButton = document.getElementById("start-button");
+
+  const bgMusic = new Audio("/backgroundmusic.mp3");
+  bgMusic.loop = true; // Loop the background music
+  bgMusic.volume = 0.2;
+
+  startButton.addEventListener("click", () => {
+    bgMusic.play();
+    startScreen.classList.add("hidden"); // Add fade-out class
+    setTimeout(() => {
+      startScreen.style.display = "none"; // Hide the start screen after animation
+      gameLoop.start(); // Start the game loop
+    }, 1500); // Match the duration of the CSS transition
+  });
   // const isMobileDevice = () =>
   //   /Mobi|Android|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent);
 
@@ -137,13 +156,13 @@ const myHearts = new Heart({
   vFrames: 1,
 });
 
-const deadChar = new DeadChar({
-  Resource: assets.images.characters,
-  frameSize: new Vector(16, 16),
-  hFrames: 7,
-  vFrames: 2,
-  position: myNinja.position,
-});
+// const deadChar = new DeadChar({
+//   Resource: assets.images.characters,
+//   frameSize: new Vector(16, 16),
+//   hFrames: 7,
+//   vFrames: 2,
+//   position: myNinja.position,
+// });
 
 // const playersData = {};
 let allPlayers = [];
@@ -176,8 +195,20 @@ network.init(
   (players) => handleCurrentPlayers(players, setAllPlayers)
 );
 
+let gameoverSoundPlayed = false;
+
 const update = () => {
+  // if (input.isAttacking) {
+  //   swordSound.currentTime = 0; // Reset the sound to the start
+  //   swordSound.play(); // Play the sword sound
+  // }
+
   if (myHearts.currentHealth <= 0) {
+    if (!gameoverSoundPlayed) {
+      gameoverMusic.play();
+      gameoverSoundPlayed = true;
+    }
+
     setTimeout(() => {
       location.reload();
     }, 3000);
@@ -471,4 +502,4 @@ function checkBoundaries(direction) {
 }
 
 const gameLoop = new GameLoop(update, draw);
-gameLoop.start();
+// gameLoop.start();

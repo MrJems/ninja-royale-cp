@@ -17,6 +17,9 @@ export class Input {
         this.onArrowPressed(RIGHT);
       }
       if (e.key == " " || e.code == "Space") {
+        const swordSound = new Audio("/sword-sound.mp3");
+        swordSound.currentTime = 0; // Reset the sound to the start
+        swordSound.play(); // Play the sword sound
         this.isSpacePressed = true;
       }
     });
