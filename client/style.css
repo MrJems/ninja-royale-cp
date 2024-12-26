@@ -20,17 +20,61 @@ canvas {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 70%; /* Matches canvas width */
-  height: 100%; /* Matches canvas height */
+  width: 70%;
+  height: 100%;
   transform: translate(-50%, -50%);
   display: none;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.8); /* Optional: Semi-transparent background */
-  z-index: 10; /* Ensures it appears above the canvas */
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10;
 }
 
 #game-over-overlay img {
   max-width: 100%;
   max-height: 100%;
+}
+#mobile-controls {
+  display: none;
+  position: fixed;
+  bottom: 5%;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#d-pad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: all;
+}
+
+#d-pad button {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  font-size: 1.5rem;
+}
+
+#attack {
+  width: 15%;
+  min-width: 80px;
+  height: 70px;
+  font-size: 1.5rem;
+  margin-right: 20px;
+  pointer-events: all;
+}
+
+#fullscreen {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  font-size: 1.2rem;
+  pointer-events: all;
 }
