@@ -23,6 +23,8 @@ const ctx = canvas.getContext("2d");
 const input = new Input();
 
 const gameoverMusic = new Audio("/gameover.wav");
+           const swordSound = new Audio("/sword-sound.mp3");
+       
 gameoverMusic.volume = 0.5;
 // const swordSound = new Audio("/sword-sound.mp3");
 document.addEventListener("DOMContentLoaded", () => {
@@ -106,6 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
     Object.keys(controls).forEach((key) => {
       controls[key].addEventListener("touchstart", () => {
         if (key === "attack") {
+
+        swordSound.play();
+           swordSound.currentTime = 0; 
           input.isSpacePressed = true;
         } else {
           input.onArrowPressed(directions[key]);
