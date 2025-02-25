@@ -1,6 +1,9 @@
 import { UP, DOWN, LEFT, RIGHT, SPACE } from "./commons/constants";
+import { AudioManager } from "./commons/AudioManager";
 export class Input {
   constructor() {
+    const audioManager = new AudioManager();
+
     this.heldDirections = [];
     this.isSpacePressed = false;
     document.addEventListener("keydown", (e) => {
@@ -17,9 +20,7 @@ export class Input {
         this.onArrowPressed(RIGHT);
       }
       if (e.key == " " || e.code == "Space") {
-        const swordSound = new Audio("/sword-sound.mp3");
-        swordSound.currentTime = 0; // Reset the sound to the start
-        swordSound.play(); // Play the sword sound
+        audioManager.playSound("swordSound");
         this.isSpacePressed = true;
       }
     });

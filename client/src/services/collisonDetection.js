@@ -26,11 +26,10 @@ export function rectangularCollision(
 }
 
 export function isColliding(r1, r2) {
-  console.log("in");
   return (
-    r1.x < r2.x + r2.width && // r1's left edge is left of r2's right edge
-    r1.x + r1.width > r2.x && // r1's right edge is right of r2's left edge
-    r1.y < r2.y + r2.height && // r1's top edge is above r2's bottom edge
-    r1.y + r1.height > r2.y // r1's bottom edge is below r2's top edge
+    r1.x < r2.x + r2.width &&
+    r1.x + r1.width > r2.x &&
+    r1.y < r2.y + r2.height &&
+    r1.y + r1.height > r2.y
   );
 }
