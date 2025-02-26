@@ -6,6 +6,10 @@ export class Input {
 
     this.heldDirections = [];
     this.isSpacePressed = false;
+
+    this.isXPressed = false;
+    this.justPressedX = false;
+
     document.addEventListener("keydown", (e) => {
       if (e.code === "ArrowUp" || e.code === "KeyW") {
         this.onArrowPressed(UP);
@@ -22,6 +26,15 @@ export class Input {
       if (e.key == " " || e.code == "Space") {
         audioManager.playSound("swordSound");
         this.isSpacePressed = true;
+      }
+
+      // Listen for "X" key to throw NinjaStar
+      if (e.code === "KeyX") {
+        // If you want only once per press:
+        if (!this.isXPressed) {
+          this.justPressedX = true; // We'll use this to spawn one star
+        }
+        this.isXPressed = true;
       }
     });
 
@@ -41,6 +54,10 @@ export class Input {
       if (e.key == " " || e.code == "Space") {
         this.isSpacePressed = false;
       }
+
+      if (e.code === "KeyX") {
+        this.isXPressed = false;
+      }
     });
   }
 
@@ -50,6 +67,14 @@ export class Input {
 
   get isAttacking() {
     return this.isSpacePressed;
+  }
+
+  consumeXPress() {
+    if (this.justPressedX) {
+      this.justPressedX = false;
+      return true;
+    }
+    return false;
   }
 
   onArrowPressed(direction) {

@@ -4,6 +4,7 @@ import {
   emitPlayerCreated,
   emitPlayerMove,
   emitPlayerAttacked,
+  emitPlayerFiredStar,
 } from "./services/networkServices";
 
 export class Network {
@@ -25,5 +26,9 @@ export class Network {
 
   playerAttacked(data) {
     emitPlayerAttacked(this.socket, data);
+  }
+
+  playerFiredStar(data) {
+    emitPlayerFiredStar(this.socket, data);
   }
 }

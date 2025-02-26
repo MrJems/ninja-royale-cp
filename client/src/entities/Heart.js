@@ -25,6 +25,13 @@ export class Heart {
       this.currentHealth = Math.max(this.currentHealth - 2, 0);
       this.lastDamageTime = currentTime;
     }
+    if (
+      damagetype === "STAR" &&
+      currentTime - this.lastDamageTime >= this.damageCooldown
+    ) {
+      this.currentHealth = Math.max(this.currentHealth - 1, 0);
+      this.lastDamageTime = currentTime;
+    }
   }
 
   draw(ctx) {

@@ -26,8 +26,6 @@ const PORT = 3000;
 let allPlayers = [];
 
 io.on("connection", (socket) => {
-  console.log(`A user connected: ${socket.id}`);
-
   // players[socket.id] = {
   //   x: 100,
   //   y: 100,
@@ -66,11 +64,25 @@ io.on("connection", (socket) => {
   // socket.on("playerAttacked", (data) => {});
   // console.log(allPlayers);
 
+  socket.on("playerFiredStar", (data) => {
+    // data = { id, star: { starId, x, y, direction, speed, active } }
+
+    // Find the player in allPlayers, add the new star to his "stars" array
+    allPlayers = allPlayers.map((player) => {
+      if (player.id === data.id) {
+        if (!player.stars) player.stars = [];
+        player.stars.push(data.star);
+      }
+      return player;
+    });
+
+    // Broadcast to everyone that currentPlayers changed
+    io.emit("currentPlayers", allPlayers);
+  });
+
   socket.on("disconnect", () => {
     console.log(`A user disconnected: ${socket.id}`);
     allPlayers = allPlayers.filter((obj) => obj.id !== socket.id);
-    console.log(allPlayers);
-
     socket.broadcast.emit("playerDisconnected", socket.id);
   });
 });

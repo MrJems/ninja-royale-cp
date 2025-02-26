@@ -98,4 +98,17 @@ export class Ninja {
 
     this.sprite.drawImage(ctx, drawX, drawY);
   }
+
+  drawRemote(ctx) {
+    ctx.save();
+    ctx.filter = `contrast(200%) brightness(50%) saturate(150%)`;
+
+    const heroOffset = new Vector(-8, -8);
+    const drawX = this.position.x + heroOffset.x;
+    const drawY = this.position.y + heroOffset.y;
+
+    this.sprite.drawImage(ctx, drawX, drawY);
+
+    ctx.restore();
+  }
 }

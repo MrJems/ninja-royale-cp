@@ -23,6 +23,11 @@ export function emitPlayerAttacked(socket, data) {
   socket.emit("playerAttacked", data);
 }
 
+export function emitPlayerFiredStar(socket, data) {
+  // data will have { id, star: { starId, x, y, direction, speed, active } }
+  socket.emit("playerFiredStar", data);
+}
+
 export function handleConnect(
   socketId,
   network,
@@ -41,6 +46,5 @@ export function handleConnect(
 }
 
 export function handleCurrentPlayers(players, setAllPlayers) {
-  // console.log("All players:", players);
   setAllPlayers(players);
 }
